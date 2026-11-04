@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-11-04
 ---
 
 # Morning digest
@@ -77,3 +78,14 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+- [#1 Define the digest data contract](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/1)
+- [#2 Implement the run-log reader](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/2)
+- [#3 Render the digest page](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/3)
+- [#4 Add the digest JSON route](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/4)
+- [#5 Link status-board nights to digests](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/5)
+- [#6 Test the digest routes](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/6)
+- [#7 Create and send the HTML preview](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/7)
+- [#8 Remove the preview marker and archive the plan](https://github.com/slawek-kordaczuk/rig-handover-s01e04/issues/8)
