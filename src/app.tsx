@@ -13,14 +13,21 @@ function isMissingFile(error: unknown): boolean {
   return error instanceof Error && 'code' in error && error.code === 'ENOENT';
 }
 
+function isNight(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
 export function createApp(config: RigConfig = loadConfig()) {
   const app = new Hono();
 
   app.get('/health', (c) => c.json({ ok: true, lane: lane().id }));
 
   app.get('/api/digest/:night', (c) => {
+    const night = c.req.param('night');
+    if (!isNight(night)) return c.notFound();
+
     try {
-      const { rows } = readNight(config.runsDir, c.req.param('night'));
+      const { rows } = readNight(config.runsDir, night);
       return c.json(rows);
     } catch (error) {
       if (isMissingFile(error)) return c.notFound();
@@ -38,7 +45,7 @@ export function createApp(config: RigConfig = loadConfig()) {
 
   app.get('/digest/:night', (c) => {
     const night = c.req.param('night');
-    if (!/^[\w-]+$/.test(night) || !existsSync(join(config.runsDir, `${night}.jsonl`))) {
+    if (!isNight(night) || !existsSync(join(config.runsDir, `${night}.jsonl`))) {
       return c.notFound();
     }
 

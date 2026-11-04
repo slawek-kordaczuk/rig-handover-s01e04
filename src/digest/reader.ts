@@ -81,5 +81,6 @@ export const readNight: ReadNight = (runsDir, night) => {
     row.lastAt = record.at;
   }
 
-  return { rows: [...rowsByJob.values()], badLines };
+  const rows = [...rowsByJob.values()].sort((a, b) => a.job.localeCompare(b.job));
+  return { rows, badLines };
 };
