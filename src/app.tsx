@@ -9,10 +9,24 @@ import { DigestPage } from './views/digest.js';
 import { Layout } from './views/layout.js';
 import { StatusBoard } from './views/status.js';
 
+function isMissingFile(error: unknown): boolean {
+  return error instanceof Error && 'code' in error && error.code === 'ENOENT';
+}
+
 export function createApp(config: RigConfig = loadConfig()) {
   const app = new Hono();
 
   app.get('/health', (c) => c.json({ ok: true, lane: lane().id }));
+
+  app.get('/api/digest/:night', (c) => {
+    try {
+      const { rows } = readNight(config.runsDir, c.req.param('night'));
+      return c.json(rows);
+    } catch (error) {
+      if (isMissingFile(error)) return c.notFound();
+      throw error;
+    }
+  });
 
   app.get('/', (c) =>
     c.html(
